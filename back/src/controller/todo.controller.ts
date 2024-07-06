@@ -1,23 +1,41 @@
-import { Body, Delete, Get, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { ServiceTodo } from 'src/service/todo.service';
 
+@Controller('todo')
 export class ControllerTodo {
   constructor(private serviceTodo: ServiceTodo) {}
 
   @Post()
   create(@Body() body) {
-    this.serviceTodo.create(body);
+    return this.serviceTodo.create(body);
   }
 
   @Get()
-  selectAll() {}
+  selectAll() {
+    return this.serviceTodo.selectAll();
+  }
 
-  @Get()
-  selectById(@Res res, @Req req) {}
+  @Get(':id')
+  selectById(@Param('id') id: string) {
+    return this.serviceTodo.selectById(id);
+  }
 
   @Post()
-  update(@Body() body) {}
+  update(@Body() body) {
+    return this.serviceTodo.update(body);
+  }
 
   @Delete()
-  delete(@Body() body) {}
+  delete(@Body() body) {
+    return this.serviceTodo.delete(body);
+  }
 }

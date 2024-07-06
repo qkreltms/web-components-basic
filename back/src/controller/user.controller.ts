@@ -1,6 +1,7 @@
-import { Body, Delete, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, Res } from '@nestjs/common';
 import { ServiceUser } from 'src/service/user.service';
 
+@Controller('user')
 export class ControllerUser {
   constructor(private serviceUser: ServiceUser) {}
 
@@ -10,10 +11,14 @@ export class ControllerUser {
   }
 
   @Get()
-  selectAll(@Res res, @Req req) {}
+  selectAll() {
+    return this.serviceUser.selectAll();
+  }
 
-  @Get()
-  selectById(@Res res, @Req req) {}
+  @Get(':id')
+  selectById(@Param('id') id: string) {
+    return this.serviceUser.selectById(id);
+  }
 
   @Post()
   update(@Body() body) {}

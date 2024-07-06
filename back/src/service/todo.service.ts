@@ -1,16 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { TodoItem } from 'src/interface/todo.interface';
+import { PROVIDER_DB } from 'src/module/db.module';
+import { Pool } from 'pg';
 
 // todo: CRUD 반복해소 방법
 // todo: mapper 구현
-// db 연동
 @Injectable()
 export class ServiceTodo {
-  create(todo: TodoItem) {}
+  constructor(@Inject(PROVIDER_DB) private db: Pool) {}
 
-  selectAll() {}
+  async create(todo: TodoItem) {
+    await this.db.query(`INSERT INTO "todo" (user_id, text, completed) VALUES(${todo.userId}, '${todo.content}', ${!!todo.isCompleted});`);
+    return todo;
+  }
 
-  selectById(id: string) {}
+  async selectAll() {
+    const res = await this.db.query('SELECT * FROM "todo"');
+    return res.rows;
+  }
+
+  async selectById(id: string) {
+    const res = await this.db.query(`SELECT * FROM "todo" WHERE id=${id}`);
+    return res.rows;
+  }
 
   update(todo: TodoItem) {}
 
