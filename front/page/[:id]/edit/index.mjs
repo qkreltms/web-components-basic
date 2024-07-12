@@ -1,5 +1,5 @@
-const templatePageTodoEdit = document.createElement("template");
-templatePageTodoEdit.innerHTML = `
+const template = document.createElement("template");
+template.innerHTML = `
 <div class='page-todo-edit'>
 </div>
 `;
@@ -10,7 +10,7 @@ class PageTodoEdit extends HTMLElement {
   }
 
   connectedCallback() {
-    this.appendChild(templatePageTodoEdit.content.cloneNode(true));
+    this.appendChild(template.content.cloneNode(true));
     this._render();
   }
 

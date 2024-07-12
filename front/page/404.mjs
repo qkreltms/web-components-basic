@@ -1,5 +1,5 @@
-const templatePage404 = document.createElement("template");
-templatePage404.innerHTML = `
+const template = document.createElement("template");
+template.innerHTML = `
 <div class='page-404'>
   404 NOT FOUND!
 </div>
@@ -11,7 +11,7 @@ class Page404 extends HTMLElement {
   }
 
   connectedCallback() {
-    this.appendChild(templatePage404.content.cloneNode(true));
+    this.appendChild(template.content.cloneNode(true));
     this._render();
   }
 

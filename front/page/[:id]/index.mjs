@@ -1,5 +1,5 @@
-const templatePageTodoRead = document.createElement("template");
-templatePageTodoRead.innerHTML = `
+const template = document.createElement("template");
+template.innerHTML = `
 <div class='page-todo-read'>
 </div>
 `;
@@ -10,7 +10,7 @@ class PageTodoRead extends HTMLElement {
   }
 
   connectedCallback() {
-    this.appendChild(templatePageTodoRead.content.cloneNode(true));
+    this.appendChild(template.content.cloneNode(true));
     this._render();
   }
 

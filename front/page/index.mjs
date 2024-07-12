@@ -1,18 +1,18 @@
-const templatePageTodo = document.createElement("template");
-templatePageTodo.innerHTML = `
+const template = document.createElement("template");
+template.innerHTML = `
   <div class='page-todo'>
     <todo-input></todo-input>
     <todo-list></todo-list>
   </div>
   `;
 
-class PageTodo extends HTMLElement {
+export class PageTodo extends HTMLElement {
   constructor() {
     super();
   }
 
   connectedCallback() {
-    this.appendChild(templatePageTodo.content.cloneNode(true));
+    this.appendChild(template.content.cloneNode(true));
     this._render();
   }
 
