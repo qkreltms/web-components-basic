@@ -22,7 +22,7 @@ export class TodoInput extends HTMLElement {
       if (!this.$input.value) return;
       event.preventDefault();
       this.dispatchEvent(
-        new CustomEvent("onSubmit", { detail: this.$input.value })
+        new CustomEvent("onSubmit", { detail: { text: this.$input.value } })
       );
       this.$input.value = "";
     });

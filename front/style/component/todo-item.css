@@ -12,12 +12,29 @@
 .todo-item {
   padding: 0.5rem;
   display: flex;
-  background: gray;
+  background: gainsboro;
   font-size: 1.2rem;
   justify-content: center;
   animation: display-animation 0.3s linear;
+  gap: 0.5rem;
 
   .todo-item__text {
     flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .todo-item__checkbox {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid #707070;
+  }
+}
+
+.todo-item.--completed {
+  .todo-item__text {
+    text-decoration: line-through;
+    color: gray;
   }
 }

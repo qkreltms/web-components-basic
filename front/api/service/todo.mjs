@@ -15,8 +15,8 @@ export default class ApiTodoService {
     return this._api.post("/todo", data);
   }
 
-  updateTodo(id, data) {
-    return this._api.patch(`/todo/${id}`, data);
+  updateTodo(data) {
+    return this._api.patch(`/todo`, data);
   }
 
   deleteTodo(id) {

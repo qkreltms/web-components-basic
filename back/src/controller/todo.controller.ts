@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ServiceTodo } from 'src/service/todo.service';
 
+// todo: mapper 구현
 @Controller('todo')
 export class ControllerTodo {
   constructor(private serviceTodo: ServiceTodo) {}
@@ -30,8 +31,8 @@ export class ControllerTodo {
     return this.serviceTodo.selectById(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() body) {
+  @Patch()
+  update(@Body() body) {
     return this.serviceTodo.update(body);
   }
 

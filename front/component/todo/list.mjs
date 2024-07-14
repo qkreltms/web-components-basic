@@ -22,7 +22,7 @@ export class TodoList extends HTMLElement {
 
     this.$input.addEventListener("onSubmit", async (event) => {
       await $api.todo.addTodo({
-        content: event.detail,
+        text: event.detail.text,
       });
       this._render();
     });
@@ -36,13 +36,16 @@ export class TodoList extends HTMLElement {
     this._render();
   }
 
-  toggleItem(event) {
+  async toggleItem(event) {
+    const currentTarget = event.currentTarget;
+    const item = this._list[event.currentTarget.index];
+    await $api.todo.updateTodo({ ...item, completed: !item.completed });
     this._render();
   }
 
   goEditPage(event) {
-    const item = this._list[event.detail];
-    navigateTo(`/${item.id}/edit`);
+    const item = this._list[event.detail.index];
+    navigateTo(`/edit/${item.id}`);
   }
 
   goDetailPage(event) {
@@ -63,7 +66,7 @@ export class TodoList extends HTMLElement {
       $item.completed = item.completed;
       $item.index = index;
       $item.addEventListener("onDelete", this.deleteItem.bind(this));
-      $item.addEventListener("onToggle", this.toggleItem.bind(this));
+      $item.addEventListener("onCompleted", this.toggleItem.bind(this));
       $item.addEventListener("onEdit", this.goEditPage.bind(this));
       $item.addEventListener("click", this.goDetailPage.bind(this));
       this.$list.appendChild($item);

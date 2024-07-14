@@ -5,7 +5,7 @@ const route = {
   // /[:id]
   "^/\\d+$": "<page-todo-read></page-todo-read>",
   // /[:id]/edit
-  "^/\\d+/edit$": "<page-todo-edit></page-todo-edit>",
+  "^/edit/\\d+$": "<page-todo-edit></page-todo-edit>",
 };
 
 const root = window.document.getElementById("app");
@@ -19,6 +19,11 @@ const renderPage = () => {
     new RegExp(regex).test(path)
   )[0];
 
+  // web component의 disconnectedCallback가 호출되도록 함
+  while (root.firstChild) {
+    root.firstChild.remove();
+  }
+  
   if (page?.length) {
     root.innerHTML = page[1];
   } else {
@@ -35,8 +40,19 @@ window.addEventListener("popstate", (event) => {
 });
 
 export const navigateTo = (path = "", state) => {
+  if (typeof path === "number") {
+    history.go(path);
+    return;
+  }
+  
   history.pushState(state, "", `#${path}`);
   // pushState가 popstate를 trigger하지 않음으로 수동으로 이벤트 dispatch
   const popStateEvent = new PopStateEvent("popstate", { path, state });
   dispatchEvent(popStateEvent);
+};
+
+export const useRoute = () => {
+  return {
+    param: document.location.hash.split("/").pop(0),
+  };
 };

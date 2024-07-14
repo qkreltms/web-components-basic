@@ -8,11 +8,6 @@ template.innerHTML = `
   </li>
   `;
 
-/**
- * TODO
- * 투두 텍스트와 날짜, 완료 여부 표시
- * 투두 클릭시 페이지 이동, 투두 연필 클릭시 상세 페이지 이동
- */
 export class TodoItem extends HTMLElement {
   constructor() {
     super();
@@ -36,15 +31,21 @@ export class TodoItem extends HTMLElement {
 
     this.$checkbox.addEventListener("click", (event) => {
       event.stopPropagation();
-      this.dispatchEvent(new CustomEvent("onToggle", { detail: this.index }));
+      this.dispatchEvent(
+        new CustomEvent("onCompleted", { detail: { event, index: this.index } })
+      );
     });
     this.$deleteButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      this.dispatchEvent(new CustomEvent("onDelete", { detail: event }));
+      this.dispatchEvent(
+        new CustomEvent("onDelete", { detail: { event, index: this.index } })
+      );
     });
     this.$editButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      this.dispatchEvent(new CustomEvent("onEdit", { detail: this.index }));
+      this.dispatchEvent(
+        new CustomEvent("onEdit", { detail: { event, index: this.index } })
+      );
     });
     this._render();
   }

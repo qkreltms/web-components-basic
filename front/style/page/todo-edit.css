@@ -1,0 +1,17 @@
+.page-todo-edit {
+    table {
+      width: 100%;
+      text-align: center;
+    }
+  
+    thead {
+      font-size: 1.6rem;
+      background: gray;
+    }
+  
+    tbody {
+      font-size: 1.4rem;
+      background: greenyellow;
+    }
+  }
+  
