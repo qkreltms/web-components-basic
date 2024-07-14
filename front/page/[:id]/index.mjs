@@ -4,6 +4,10 @@ template.innerHTML = `
 </div>
 `;
 
+/**
+ * TODO
+ * query를 조회하여 특정 투두 상세 표시
+ */
 class PageTodoRead extends HTMLElement {
   constructor() {
     super();
