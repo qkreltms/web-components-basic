@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Req,
   Res,
@@ -29,13 +30,13 @@ export class ControllerTodo {
     return this.serviceTodo.selectById(id);
   }
 
-  @Post()
-  update(@Body() body) {
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() body) {
     return this.serviceTodo.update(body);
   }
 
   @Delete()
-  delete(@Body() body) {
-    return this.serviceTodo.delete(body);
+  delete(@Param('id') id: string) {
+    return this.serviceTodo.delete();
   }
 }

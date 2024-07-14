@@ -34,6 +34,9 @@ window.addEventListener("popstate", (event) => {
   renderPage();
 });
 
-export const navigateTo = (path = '', data = {}) => {
-  history.pushState(data, "", `#/${path}`);
-}
+export const navigateTo = (path = "", state) => {
+  history.pushState(state, "", `#${path}`);
+  // pushState가 popstate를 trigger하지 않음으로 수동으로 이벤트 dispatch
+  const popStateEvent = new PopStateEvent("popstate", { path, state });
+  dispatchEvent(popStateEvent);
+};

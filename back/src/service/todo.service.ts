@@ -26,5 +26,5 @@ export class ServiceTodo {
 
   update(todo: TodoItem) {}
 
-  delete(todo: TodoItem) {}
+  delete() {}
 }

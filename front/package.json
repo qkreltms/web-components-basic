@@ -2,7 +2,8 @@
   "name": "front",
   "version": "1.0.0",
   "description": "",
-  "main": "router.js",
+  "main": "index.html",
+  "type":"module",
   "scripts": {
     "start": "http-server ./ -p 8080"
   },
