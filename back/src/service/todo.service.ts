@@ -10,7 +10,8 @@ export class ServiceTodo {
   constructor(@Inject(PROVIDER_DB) private db: Pool) {}
 
   async create(todo: TodoItem) {
-    await this.db.query(`INSERT INTO "todo" (user_id, text, completed) VALUES(${todo.userId}, '${todo.content}', ${!!todo.isCompleted});`);
+    // TODO: 유저 정보는 추후 토큰으로 대체
+    await this.db.query(`INSERT INTO "todo" (user_id, text, completed) VALUES(${1}, '${todo.content}', ${!!todo.isCompleted});`);
     return todo;
   }
 
@@ -26,5 +27,8 @@ export class ServiceTodo {
 
   update(todo: TodoItem) {}
 
-  delete() {}
+  async delete(id: string) {
+    const res = await this.db.query(`DELETE FROM "todo" WHERE id=${id}`);
+    return res.rows;
+  }
 }

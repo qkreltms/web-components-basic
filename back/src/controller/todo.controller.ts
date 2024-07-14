@@ -35,8 +35,8 @@ export class ControllerTodo {
     return this.serviceTodo.update(body);
   }
 
-  @Delete()
+  @Delete(':id')
   delete(@Param('id') id: string) {
-    return this.serviceTodo.delete();
+    return this.serviceTodo.delete(id);
   }
 }

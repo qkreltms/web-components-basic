@@ -5,7 +5,7 @@ export default class OFetch {
     const options = {
       headers: {
         "Content-Type": "application/json",
-        'Access-Control-Allow-Origin': this.baseUrl,
+        "Access-Control-Allow-Origin": this.baseUrl,
       },
       body: JSON.stringify(body),
       ...customOptions,
@@ -26,7 +26,7 @@ export default class OFetch {
   async post(url, body = {}, options) {
     const response = await fetch(`${this.baseUrl}${url}`, {
       method: "POST",
-      body,
+      body: JSON.stringify(body),
       ...this.defaultOptions(options),
     });
     return response.json();
@@ -43,7 +43,7 @@ export default class OFetch {
   async patch(url, body = {}, options) {
     const response = await fetch(`${this.baseUrl}${url}`, {
       method: "PATCH",
-      body,
+      body: JSON.stringify(body),
       ...this.defaultOptions(options),
     });
     return response.json();

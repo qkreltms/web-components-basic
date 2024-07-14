@@ -1,9 +1,21 @@
+@keyframes display-animation {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .todo-item {
   padding: 0.5rem;
   display: flex;
   background: gray;
   font-size: 1.2rem;
   justify-content: center;
+  animation: display-animation 0.3s linear;
 
   .todo-item__text {
     flex: 1;

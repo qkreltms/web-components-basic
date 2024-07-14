@@ -1,7 +1,6 @@
 const template = document.createElement("template");
 template.innerHTML = `
   <div class='page-todo'>
-    <todo-input></todo-input>
     <todo-list></todo-list>
   </div>
   `;

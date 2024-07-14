@@ -18,10 +18,21 @@ export class TodoList extends HTMLElement {
   connectedCallback() {
     this.appendChild(template.content.cloneNode(true));
     this.$list = this.querySelector("ul.todo-list__list");
+    this.$input = this.querySelector("todo-input");
+
+    this.$input.addEventListener("onSubmit", async (event) => {
+      await $api.todo.addTodo({
+        content: event.detail,
+      });
+      this._render();
+    });
     this._render();
   }
 
-  removeItem(event) {
+  async deleteItem(event) {
+    const currentTarget = event.currentTarget;
+    const item = this._list[event.currentTarget.index];
+    await $api.todo.deleteTodo(item.id);
     this._render();
   }
 
@@ -30,13 +41,13 @@ export class TodoList extends HTMLElement {
   }
 
   goEditPage(event) {
-    const item = this._list[event.detail.key];
+    const item = this._list[event.detail];
     navigateTo(`/${item.id}/edit`);
   }
 
   goDetailPage(event) {
     const currentTarget = event.currentTarget;
-    const item = this._list[event.currentTarget.key];
+    const item = this._list[event.currentTarget.index];
     navigateTo(`/${item.id}`);
   }
 
@@ -49,10 +60,9 @@ export class TodoList extends HTMLElement {
     this._list.forEach((item, index) => {
       const $item = document.createElement("todo-item");
       $item.setAttribute("text", item.text);
-      $item.setAttribute("key", item.id);
       $item.completed = item.completed;
-      $item.key = index;
-      $item.addEventListener("onRemove", this.removeItem.bind(this));
+      $item.index = index;
+      $item.addEventListener("onDelete", this.deleteItem.bind(this));
       $item.addEventListener("onToggle", this.toggleItem.bind(this));
       $item.addEventListener("onEdit", this.goEditPage.bind(this));
       $item.addEventListener("click", this.goDetailPage.bind(this));
