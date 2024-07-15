@@ -1,31 +1,44 @@
 const route = {
   // /
-  "^/$": "<page-todo></page-todo>",
-  "^/404$": "<page-404></page-404>",
+  "^/$": { element: "<page-todo></page-todo>", paramRegex: "" },
+  "^/404$": { element: "<page-404></page-404>", paramRegex: "" },
   // /[:id]
-  "^/\\d+$": "<page-todo-read></page-todo-read>",
+  "^/\\d+$": {
+    element: "<page-todo-read></page-todo-read>",
+    paramRegex: "\\d+",
+  },
   // /[:id]/edit
-  "^/edit/\\d+$": "<page-todo-edit></page-todo-edit>",
+  "^/\\d+/edit$": {
+    element: "<page-todo-edit></page-todo-edit>",
+    paramRegex: "\\d+",
+  },
 };
 
 const root = window.document.getElementById("app");
-const renderPage = () => {
-  console.log(
-    `location: ${document.location}, state: ${JSON.stringify(event.state)}`
-  );
 
+const findRoute = () => {
   const path = document.location.hash.slice(1);
   const page = Object.entries(route).filter(([regex]) =>
     new RegExp(regex).test(path)
   )[0];
 
+  return [page, path];
+};
+
+const renderPage = () => {
+  console.log(
+    `location: ${document.location}, state: ${JSON.stringify(event.state)}`
+  );
+
+  const [page] = findRoute();
+
   // web component의 disconnectedCallback가 호출되도록 함
   while (root.firstChild) {
     root.firstChild.remove();
   }
-  
+
   if (page?.length) {
-    root.innerHTML = page[1];
+    root.innerHTML = page[1].element;
   } else {
     root.innerHTML = "<page-404></page-404>";
   }
@@ -44,7 +57,7 @@ export const navigateTo = (path = "", state) => {
     history.go(path);
     return;
   }
-  
+
   history.pushState(state, "", `#${path}`);
   // pushState가 popstate를 trigger하지 않음으로 수동으로 이벤트 dispatch
   const popStateEvent = new PopStateEvent("popstate", { path, state });
@@ -52,7 +65,9 @@ export const navigateTo = (path = "", state) => {
 };
 
 export const useRoute = () => {
+  const [page, path] = findRoute();
+  const match = path.match(new RegExp(page[1].paramRegex));
   return {
-    param: document.location.hash.split("/").pop(0),
+    param: match[0],
   };
 };

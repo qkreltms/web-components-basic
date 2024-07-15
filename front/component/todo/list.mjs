@@ -45,7 +45,7 @@ export class TodoList extends HTMLElement {
 
   goEditPage(event) {
     const item = this._list[event.detail.index];
-    navigateTo(`/edit/${item.id}`);
+    navigateTo(`/${item.id}/edit`);
   }
 
   goDetailPage(event) {
