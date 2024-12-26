@@ -1,6 +1,8 @@
 # 웹 컴포넌트 기초
 1. 라이브러리 및 프레임워크에 자유로운 컴포넌트를 개발해보자
 
+<img src="ezgif-1-c1115b2343.gif" alt="gif">
+
 # 실행
 1. cd front && npm run start
 2. cd back && npm run start:dev
